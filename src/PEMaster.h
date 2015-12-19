@@ -1,5 +1,6 @@
 #pragma once
 #include "common/common.h"
+#include <vector>
 
 class PEMaster
 {
@@ -17,13 +18,13 @@ public:
 	uchar* m_subData;
 	int m_subDataSize;
 
-	int m_sectionCount;
 	IMAGE_NT_HEADERS m_ntHeaders;
-	IMAGE_SECTION_HEADER* m_sectionHeaders;
-
-	Section* m_sections;
+	std::vector<IMAGE_SECTION_HEADER> m_sectionHeaders;
+	std::vector<Section> m_sections;
 
 	bool Load(const char* fileName);
 	bool Rebuild(const char* fileName);
+	void AddSection(const char* name, uchar* data, int dataSize, DWORD charac);
+	static DWORD Align(DWORD value, DWORD align);
 };
 

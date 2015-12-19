@@ -37,20 +37,27 @@ bool PEMaster::Load(const char* fileName)
 	if (m_ntHeaders.OptionalHeader.Magic != IMAGE_NT_OPTIONAL_HDR32_MAGIC)
 		return false;	//not PE x32
 
-	m_sectionCount = m_ntHeaders.FileHeader.NumberOfSections;
-	m_sectionHeaders = new IMAGE_SECTION_HEADER[m_sectionCount];
-	memcpy(m_sectionHeaders, CASTOFFSET(IMAGE_DOS_HEADER, fileView, m_dosHeader.e_lfanew + sizeof(IMAGE_NT_HEADERS)),
-		sizeof(IMAGE_SECTION_HEADER)* m_ntHeaders.FileHeader.NumberOfSections);
-
-	
-	m_sections = new Section[m_sectionCount];
-	for (int iSec = 0; iSec < m_sectionCount; iSec++)
+	int sectionCount = m_ntHeaders.FileHeader.NumberOfSections;
+	uchar* headerMem = CASTOFFSET(uchar, fileView, m_dosHeader.e_lfanew + sizeof(IMAGE_NT_HEADERS));
+	for (int i = 0; i < sectionCount; i++)
 	{
+		IMAGE_SECTION_HEADER header;
+		memcpy(&header, headerMem, sizeof(IMAGE_SECTION_HEADER));
+		m_sectionHeaders.push_back(header);
+
+		headerMem += sizeof(IMAGE_SECTION_HEADER);
+	}
+
+	for (int iSec = 0; iSec < sectionCount; iSec++)
+	{
+		Section section;
 		uchar* data = new uchar[m_sectionHeaders[iSec].SizeOfRawData];
 		memcpy(data, CASTOFFSET(IMAGE_DOS_HEADER, fileView, m_sectionHeaders[iSec].PointerToRawData),
-			m_sectionHeaders[iSec].SizeOfRawData);
-		m_sections[iSec].data = data;
-		m_sections[iSec].size = m_sectionHeaders[iSec].SizeOfRawData;
+			   m_sectionHeaders[iSec].SizeOfRawData);
+
+		section.data = data;
+		section.size = m_sectionHeaders[iSec].SizeOfRawData;
+		m_sections.push_back(section);
 	}
 
 	return true;
@@ -69,20 +76,60 @@ bool PEMaster::Rebuild(const char* fileName)
 	WriteFile(hFile, &m_dosHeader, sizeof(m_dosHeader), &written, NULL);
 	WriteFile(hFile, m_subData, m_subDataSize, &written, NULL);
 	WriteFile(hFile, &m_ntHeaders, sizeof(m_ntHeaders), &written, NULL);
-	
-	for (int iSec = 0; iSec < m_sectionCount; iSec++)
+
+	int sectionCount = m_ntHeaders.FileHeader.NumberOfSections;
+	for (int iSec = 0; iSec < sectionCount; iSec++)
 	{
 		WriteFile(hFile, &m_sectionHeaders[iSec], sizeof(IMAGE_SECTION_HEADER), &written, NULL);
 	}
 
-	for (int iSec = 0; iSec < m_sectionCount; iSec++)
+	for (int iSec = 0; iSec < sectionCount; iSec++)
 	{
 		SetFilePointer(hFile, m_sectionHeaders[iSec].PointerToRawData, 0, FILE_BEGIN);
-		WriteFile(hFile, m_sections[iSec].data, m_sections[iSec].size, &written, NULL);
+		WriteFile(hFile, m_sections[iSec].data, m_sectionHeaders[iSec].SizeOfRawData, &written, NULL);
 	}
 
 	SetEndOfFile(hFile);
 	CloseHandle(hFile);
 
 	return true;
+}
+
+void PEMaster::AddSection(const char* name, uchar* data, int dataSize, DWORD charac)
+{
+	IMAGE_SECTION_HEADER& lastHeader = m_sectionHeaders[m_ntHeaders.FileHeader.NumberOfSections - 1];
+	IMAGE_SECTION_HEADER header;
+	memset(&header, 0, sizeof(header));
+	memcpy(&header.Name, name, sizeof(header.Name));
+
+	header.Misc.PhysicalAddress = dataSize;
+	header.Misc.VirtualSize = dataSize;
+	header.NumberOfLinenumbers = 0;
+	header.NumberOfRelocations = 0;
+	header.Characteristics = charac;
+	header.PointerToRawData = Align(lastHeader.PointerToRawData + lastHeader.SizeOfRawData, m_ntHeaders.OptionalHeader.FileAlignment);
+	header.SizeOfRawData = Align(dataSize, m_ntHeaders.OptionalHeader.FileAlignment);
+	header.VirtualAddress = Align(lastHeader.VirtualAddress + lastHeader.Misc.VirtualSize, m_ntHeaders.OptionalHeader.SectionAlignment);
+
+	Section section;
+	section.data = data;
+	section.size = dataSize;
+
+	m_sectionHeaders.push_back(header);
+	m_sections.push_back(section);
+	m_ntHeaders.FileHeader.NumberOfSections++;
+	m_ntHeaders.OptionalHeader.SizeOfImage = Align(header.VirtualAddress + header.Misc.VirtualSize, m_ntHeaders.OptionalHeader.SectionAlignment);
+
+	//not needed?
+//	m_ntHeaders.OptionalHeader.SizeOfInitializedData += header.Misc.VirtualSize;
+//	m_ntHeaders.OptionalHeader.SizeOfHeaders = Align(m_ntHeaders.OptionalHeader.SizeOfHeaders + sizeof(IMAGE_SECTION_HEADER), m_ntHeaders.OptionalHeader.FileAlignment);
+}
+
+DWORD PEMaster::Align(DWORD value, DWORD align)
+{
+	DWORD surplus = (value % align);
+	if (surplus == 0)
+		return value;
+
+	return (value - surplus + align);
 }
