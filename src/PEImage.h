@@ -2,21 +2,19 @@
 #include "common/common.h"
 #include <vector>
 
-class PEMaster
+class PEImage
 {
 public:
-	PEMaster();
-	~PEMaster();
+	PEImage();
+	~PEImage();
 
-	struct Section
-	{
+	struct Section {
 		uchar* data;
 		unsigned int size;
 	};
 
 	IMAGE_DOS_HEADER m_dosHeader;
-	uchar* m_subData;
-	int m_subDataSize;
+	uchar* m_subData; int m_subDataSize;
 
 	IMAGE_NT_HEADERS m_ntHeaders;
 	std::vector<IMAGE_SECTION_HEADER> m_sectionHeaders;

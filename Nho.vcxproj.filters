@@ -5,11 +5,17 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Source Files\PEMaster">
+    <Filter Include="Source Files\Processor">
+      <UniqueIdentifier>{3acdec04-aebd-4036-afdc-242d7fc0aebd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PEImage">
       <UniqueIdentifier>{1dd2083e-0a01-4758-89f0-d5ad7ce01894}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\common">
+    <Filter Include="Source Files\Common">
       <UniqueIdentifier>{56627b6e-6ee9-43da-b6c9-54c1f4d026b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ProfileManager">
+      <UniqueIdentifier>{55d04dcd-590e-4c8f-ba5e-f151b5486b8c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -19,16 +25,28 @@
     <ClCompile Include="src\Nho.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\PEMaster.cpp">
-      <Filter>Source Files\PEMaster</Filter>
+    <ClCompile Include="src\NhoProcessor.cpp">
+      <Filter>Source Files\Processor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEImage.cpp">
+      <Filter>Source Files\PEImage</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ProfileManager.cpp">
+      <Filter>Source Files\ProfileManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\common\common.h">
-      <Filter>Source Files\common</Filter>
+      <Filter>Source Files\Common</Filter>
     </ClInclude>
-    <ClInclude Include="src\PEMaster.h">
-      <Filter>Source Files\PEMaster</Filter>
+    <ClInclude Include="src\NhoProcessor.h">
+      <Filter>Source Files\Processor</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEImage.h">
+      <Filter>Source Files\PEImage</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ProfileManager.h">
+      <Filter>Source Files\ProfileManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

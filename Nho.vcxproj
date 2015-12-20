@@ -81,11 +81,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Nho.cpp" />
-    <ClCompile Include="src\PEMaster.cpp" />
+    <ClCompile Include="src\NhoProcessor.cpp" />
+    <ClCompile Include="src\PEImage.cpp" />
+    <ClCompile Include="src\ProfileManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\common\common.h" />
-    <ClInclude Include="src\PEMaster.h" />
+    <ClInclude Include="src\NhoProcessor.h" />
+    <ClInclude Include="src\PEImage.h" />
+    <ClInclude Include="src\ProfileManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
