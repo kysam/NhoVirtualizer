@@ -45,9 +45,12 @@ void ProfileManager::Execute(NhoProcessor* processor)
 		std::cout << "Could not load input file...\n";
 		return;
 	}
+
+	std::cout << "Pre-Processing...\n";
 	PREPROCESS_ERROR error = processor->PreProcess();
 	if (error == SUCCESS)
 	{
+		std::cout << "Processing...\n";
 		processor->Process();
 		std::cout << "Processing finished successfully.\n";
 	}

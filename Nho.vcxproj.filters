@@ -17,6 +17,15 @@
     <Filter Include="Source Files\ProfileManager">
       <UniqueIdentifier>{55d04dcd-590e-4c8f-ba5e-f151b5486b8c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Logger">
+      <UniqueIdentifier>{4c4a282d-73a2-498c-8dba-7df9fda49364}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\VM">
+      <UniqueIdentifier>{4c940103-ce32-45dd-a157-62ae9e6d245a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ASM">
+      <UniqueIdentifier>{7eccebe9-8ffa-48c7-a45f-d2ed5d2580e2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -34,6 +43,36 @@
     <ClCompile Include="src\ProfileManager.cpp">
       <Filter>Source Files\ProfileManager</Filter>
     </ClCompile>
+    <ClCompile Include="src\Logger.cpp">
+      <Filter>Source Files\Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="src\global.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Translator.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="src\asm\libudis86\decode.c">
+      <Filter>Source Files\ASM</Filter>
+    </ClCompile>
+    <ClCompile Include="src\asm\libudis86\itab.c">
+      <Filter>Source Files\ASM</Filter>
+    </ClCompile>
+    <ClCompile Include="src\asm\libudis86\syn.c">
+      <Filter>Source Files\ASM</Filter>
+    </ClCompile>
+    <ClCompile Include="src\asm\libudis86\syn-att.c">
+      <Filter>Source Files\ASM</Filter>
+    </ClCompile>
+    <ClCompile Include="src\asm\libudis86\syn-intel.c">
+      <Filter>Source Files\ASM</Filter>
+    </ClCompile>
+    <ClCompile Include="src\asm\libudis86\udis86.c">
+      <Filter>Source Files\ASM</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NhoVM.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\common\common.h">
@@ -47,6 +86,36 @@
     </ClInclude>
     <ClInclude Include="src\ProfileManager.h">
       <Filter>Source Files\ProfileManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Logger.h">
+      <Filter>Source Files\Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="src\global.h">
+      <Filter>Source Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Translator.h">
+      <Filter>Source Files\VM</Filter>
+    </ClInclude>
+    <ClInclude Include="src\asm\libudis86\decode.h">
+      <Filter>Source Files\ASM</Filter>
+    </ClInclude>
+    <ClInclude Include="src\asm\libudis86\extern.h">
+      <Filter>Source Files\ASM</Filter>
+    </ClInclude>
+    <ClInclude Include="src\asm\libudis86\itab.h">
+      <Filter>Source Files\ASM</Filter>
+    </ClInclude>
+    <ClInclude Include="src\asm\libudis86\syn.h">
+      <Filter>Source Files\ASM</Filter>
+    </ClInclude>
+    <ClInclude Include="src\asm\libudis86\types.h">
+      <Filter>Source Files\ASM</Filter>
+    </ClInclude>
+    <ClInclude Include="src\asm\libudis86\udint.h">
+      <Filter>Source Files\ASM</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NhoVM.h">
+      <Filter>Source Files\VM</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

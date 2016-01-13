@@ -33,7 +33,7 @@ PREPROCESS_ERROR NhoProcessor::PreProcess()
 
 		uchar* code = sections[i].data;
 		while (true) {
-			if ((unsigned int)(code + 6) > sections[i].size)
+			if ((unsigned int)(code + MARKER_SIZE) > sections[i].size)
 				break;
 
 			WORD cWord = *(WORD*)(code);
@@ -63,7 +63,7 @@ PREPROCESS_ERROR NhoProcessor::PreProcess()
 			target.beginOffset = -1;
 			target.endOffset = -1;
 
-			code += 6;
+			code += MARKER_SIZE;
 		}
 
 		tgroup.section = i;
@@ -72,5 +72,26 @@ PREPROCESS_ERROR NhoProcessor::PreProcess()
 	}
 	
 	return SUCCESS;
+}
+
+
+void NhoProcessor::Process()
+{
+	m_pe.AddSection(".nho", nullptr, 0, IMAGE_SCN_CNT_CODE | IMAGE_SCN_CNT_INITIALIZED_DATA); //empty section
+	PEImage::Section* newSection = &m_pe.m_sections[m_pe.m_sections.size() - 1];
+
+	for (int iG = 0; iG < m_targetGroups.size(); iG++)
+	{
+		auto & targets = m_targetGroups[iG].targets;
+		std::vector<NhoInstr> nhos;
+		for (int iT = 0; iT < targets.size(); iT++)
+		{
+			uchar* codeBegin = (uchar*)(targets[iT].beginOffset + MARKER_SIZE);
+			int codeSize = targets[iT].endOffset - targets[iT].beginOffset - MARKER_SIZE;
+			m_translator.Translate(codeBegin, codeSize, &nhos);
+			memcpy(codeBegin, &nhos[0], nhos.size() * sizeof(NhoInstr));
+		}
+		
+	}
 }
 

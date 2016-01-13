@@ -80,16 +80,36 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\asm\libudis86\decode.c" />
+    <ClCompile Include="src\asm\libudis86\itab.c" />
+    <ClCompile Include="src\asm\libudis86\syn-att.c" />
+    <ClCompile Include="src\asm\libudis86\syn-intel.c" />
+    <ClCompile Include="src\asm\libudis86\syn.c" />
+    <ClCompile Include="src\asm\libudis86\udis86.c" />
+    <ClCompile Include="src\global.cpp" />
+    <ClCompile Include="src\Logger.cpp" />
     <ClCompile Include="src\Nho.cpp" />
     <ClCompile Include="src\NhoProcessor.cpp" />
+    <ClCompile Include="src\NhoVM.cpp" />
     <ClCompile Include="src\PEImage.cpp" />
     <ClCompile Include="src\ProfileManager.cpp" />
+    <ClCompile Include="src\Translator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\asm\libudis86\decode.h" />
+    <ClInclude Include="src\asm\libudis86\extern.h" />
+    <ClInclude Include="src\asm\libudis86\itab.h" />
+    <ClInclude Include="src\asm\libudis86\syn.h" />
+    <ClInclude Include="src\asm\libudis86\types.h" />
+    <ClInclude Include="src\asm\libudis86\udint.h" />
     <ClInclude Include="src\common\common.h" />
+    <ClInclude Include="src\global.h" />
+    <ClInclude Include="src\Logger.h" />
     <ClInclude Include="src\NhoProcessor.h" />
+    <ClInclude Include="src\NhoVM.h" />
     <ClInclude Include="src\PEImage.h" />
     <ClInclude Include="src\ProfileManager.h" />
+    <ClInclude Include="src\Translator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

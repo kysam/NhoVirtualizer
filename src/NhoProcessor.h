@@ -2,8 +2,10 @@
 #include <vector>
 #include "common/common.h"
 #include "PEImage.h"
+#include "Translator.h"
 
-#define MARKER_JMP_SHORT 0x04EB
+#define MARKER_JMP_SHORT 0x09EB
+#define MARKER_SIZE 0x9
 
 enum PREPROCESS_ERROR {
 	SUCCESS, MISMATCH_FOUND
@@ -34,6 +36,7 @@ public:
 	unsigned int m_markerKeyEnd;
 	PEImage m_pe;
 	std::vector<VMTargetGroup> m_targetGroups;
+	Translator m_translator;
 
 	bool Load(const char* fileName);
 	PREPROCESS_ERROR PreProcess();
